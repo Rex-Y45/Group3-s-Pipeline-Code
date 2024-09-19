@@ -1,0 +1,12 @@
+# Open Asset/Shot File
+function OpenAssetFile(file_path)
+    if file_path exists
+        open file using Maya's file loading API
+    else
+        print "File does not exist"
+
+# User Interface, for selecting a file
+function UI_OpenAssetFile(path)
+    file_path = path
+    if file_path is not empty
+        OpenAssetFile(file_path)
