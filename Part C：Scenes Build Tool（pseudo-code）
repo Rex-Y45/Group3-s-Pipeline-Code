@@ -4,7 +4,7 @@ import os  # 导入操作系统模块，用于文件路径处理
 class AssetLoaderTool:
     def __init__(self, shot_name, working_file_directory):
         """
-        初始化工具，设置镜头名称和工作文件目录，定义需要加载的资产字典。
+        初始化工具，设置镜头名称和工作文件目录，定义需要加载的资产目录。
         """
         self.shot_name = shot_name  # 存储镜头名称
         self.working_file_directory = working_file_directory  # 存储工作文件的目录路径
