@@ -1,12 +1,54 @@
-# Open Asset/Shot File
-function OpenAssetFile(file_path)
-    if file_path exists
-        open file using Maya's file loading API
-    else
-        print "File does not exist"
+FUNCTION openSourceFileTool()
 
-# User Interface, for selecting a file
-function UI_OpenAssetFile(path)
-    file_path = path
-    if file_path is not empty
-        OpenAssetFile(file_path)
+    // Step 1: Define the structure of the file system
+    ASSET_PATH = "path/to/assets"
+    SHOT_PATH = "path/to/shots"
+
+    // Step 2: Define the types of files and their subcategories
+    ASSET_CATEGORIES = ["Model", "Rig"]
+    SHOT_CATEGORIES = ["Layout", "Animation", "Lighting"]
+
+    // Step 3: Create the user interface
+    DISPLAY "Select Source Type:"
+    DISPLAY "1. Assets"
+    DISPLAY "2. Shots"
+    USER_CHOICE = GET_USER_INPUT()
+
+    // Step 4: Based on user choice, show relevant categories
+    IF USER_CHOICE == 1 THEN
+        DISPLAY "Select Asset Type:"
+        FOR EACH CATEGORY IN ASSET_CATEGORIES
+            DISPLAY CATEGORY
+        END FOR
+        ASSET_CHOICE = GET_USER_INPUT()
+        SELECTED_PATH = ASSET_PATH + "/" + ASSET_CHOICE
+
+    ELSE IF USER_CHOICE == 2 THEN
+        DISPLAY "Select Shot Type:"
+        FOR EACH CATEGORY IN SHOT_CATEGORIES
+            DISPLAY CATEGORY
+        END FOR
+        SHOT_CHOICE = GET_USER_INPUT()
+        SELECTED_PATH = SHOT_PATH + "/" + SHOT_CHOICE
+
+    ELSE
+        DISPLAY "Invalid choice. Please try again."
+        RETURN
+
+    // Step 5: Display the files in the selected path
+    FILES = GET_FILES_FROM_DIRECTORY(SELECTED_PATH)
+    DISPLAY "Available Files:"
+    FOR EACH FILE IN FILES
+        DISPLAY FILE
+    END FOR
+
+    // Step 6: Allow user to open a file
+    DISPLAY "Enter the name of the file to open:"
+    FILE_TO_OPEN = GET_USER_INPUT()
+    IF FILE_TO_OPEN IN FILES THEN
+        OPEN_FILE(SELECTED_PATH + "/" + FILE_TO_OPEN)
+    ELSE
+        DISPLAY "File not found. Please check the name and try again."
+    END IF
+
+END FUNCTION
